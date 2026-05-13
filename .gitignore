@@ -1,0 +1,10 @@
+build/
+.vs/
+*.exe
+*.pdb
+*.obj
+*.tlog
+*.idb
+*.ilk
+*.suo
+.cache/
