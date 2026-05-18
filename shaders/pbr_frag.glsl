@@ -3,11 +3,13 @@ out vec4 FragColor;
 in vec2 TexCoords;
 in vec3 WorldPos;
 in vec3 Normal;
+in vec4 FragPosLightSpace;
 
 uniform vec3 lightPositions[4];
 uniform vec3 lightColors[4];
 uniform vec3 camPos;
 uniform vec3 emissive;
+uniform sampler2D shadowMap;
 
 struct Material {
     vec3 albedo;
@@ -49,6 +51,32 @@ vec3 fresnelSchlick(float cosTheta, vec3 F0) {
     return F0 + (1.0 - F0) * pow(clamp(1.0 - cosTheta, 0.0, 1.0), 5.0);
 }
 
+float ShadowCalculation(vec4 fragPosLightSpace, vec3 normal, vec3 lightDir)
+{
+    vec3 projCoords = fragPosLightSpace.xyz / fragPosLightSpace.w;
+    projCoords = projCoords * 0.5 + 0.5;
+    float closestDepth = texture(shadowMap, projCoords.xy).r; 
+    float currentDepth = projCoords.z;
+    float bias = max(0.005 * (1.0 - dot(normal, lightDir)), 0.0005);
+    
+    float shadow = 0.0;
+    vec2 texelSize = 1.0 / textureSize(shadowMap, 0);
+    for(int x = -1; x <= 1; ++x)
+    {
+        for(int y = -1; y <= 1; ++y)
+        {
+            float pcfDepth = texture(shadowMap, projCoords.xy + vec2(x, y) * texelSize).r; 
+            shadow += currentDepth - bias > pcfDepth ? 1.0 : 0.0;        
+        }    
+    }
+    shadow /= 9.0;
+    
+    if(projCoords.z > 1.0)
+        shadow = 0.0;
+        
+    return shadow;
+}
+
 void main() {		
     vec3 N = normalize(Normal);
     vec3 V = normalize(camPos - WorldPos);
@@ -70,8 +98,10 @@ void main() {
         Lo += (kD * material.albedo / PI + spec) * radiance * max(dot(N, L), 0.0);
     }   
     
+    float shadowFactor = ShadowCalculation(FragPosLightSpace, N, normalize(vec3(2.0f, 12.0f, 2.0f) - WorldPos));
+    
     vec3 ambient = vec3(0.12) * material.albedo;
-    vec3 color = ambient + Lo + emissive;
+    vec3 color = ambient + (1.0 - shadowFactor * 0.8) * Lo + emissive;
 
     // High Sharpness: ACES Film Tone Mapping
     vec3 x = color * 1.1; // Balanced exposure
@@ -79,6 +109,11 @@ void main() {
 
     // Gamma Correction
     color = pow(color, vec3(1.0/2.2));
+
+    // Sharpening / Micro-contrast enhancement
+    vec3 midTone = vec3(0.5);
+    color = mix(midTone, color, 1.08); // Boost contrast slightly by 8% to make details stand out!
+    color = clamp(color, 0.0, 1.0);
 
     FragColor = vec4(color, 1.0);
 }

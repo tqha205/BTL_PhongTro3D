@@ -71,13 +71,13 @@ void Scene::Initialize() {
 
     // --- LOFT FURNITURE ---
     // 1. Wardrobe (Tủ quần áo) - 3 doors
-    glm::vec3 wdPos(-6.25f, loftY + 2.7f, -9.5f);
-    AddBox(wdPos, glm::vec3(3.0f, 5.4f, 1.8f), colDarkWood, 0.1f, 0.8f);
+    glm::vec3 wdPos(-6.25f, loftY + 2.2f, -9.5f);
+    AddBox(wdPos, glm::vec3(3.0f, 4.4f, 1.8f), colDarkWood, 0.1f, 0.8f);
     // Wardrobe doors background
-    AddBox(wdPos + glm::vec3(0, 0, 0.92f), glm::vec3(2.8f, 5.2f, 0.05f), colDarkWood, 0.1f, 0.9f);
+    AddBox(wdPos + glm::vec3(0, 0, 0.92f), glm::vec3(2.8f, 4.2f, 0.05f), colDarkWood, 0.1f, 0.9f);
     // Gaps between 3 doors
-    AddBox(wdPos + glm::vec3(-0.47f, 0, 0.94f), glm::vec3(0.03f, 5.2f, 0.05f), colBlack, 0.5f, 0.2f); 
-    AddBox(wdPos + glm::vec3(0.47f, 0, 0.94f), glm::vec3(0.03f, 5.2f, 0.05f), colBlack, 0.5f, 0.2f);
+    AddBox(wdPos + glm::vec3(-0.47f, 0, 0.94f), glm::vec3(0.03f, 4.2f, 0.05f), colBlack, 0.5f, 0.2f); 
+    AddBox(wdPos + glm::vec3(0.47f, 0, 0.94f), glm::vec3(0.03f, 4.2f, 0.05f), colBlack, 0.5f, 0.2f);
     // Door handles
     AddBox(wdPos + glm::vec3(-0.55f, -0.2f, 0.96f), glm::vec3(0.04f, 0.8f, 0.04f), colGrey, 0.8f, 0.2f);
     AddBox(wdPos + glm::vec3(0.35f, -0.2f, 0.96f), glm::vec3(0.04f, 0.8f, 0.04f), colGrey, 0.8f, 0.2f);
@@ -116,33 +116,48 @@ void Scene::Initialize() {
     AddBox(nsRight + glm::vec3(0, 0.8f, 0), glm::vec3(0.35f, 0.3f, 0.35f), glm::vec3(0.2f, 0.6f, 0.2f), 0.0f, 0.9f);  // Leaves
     AddBox(nsRight + glm::vec3(0, 0.95f, 0), glm::vec3(0.15f, 0.15f, 0.15f), colOrange, 0.0f, 0.8f); // Flower
 
-    // 3. Desk Area - Taller
-    glm::vec3 deskPos(4.5f, loftY + 1.0f, -8.0f);
-    AddBox(deskPos, glm::vec3(3.5f, 0.1f, 1.8f), colWood, 0.1f, 0.7f); // Desktop
-    AddBox(deskPos + glm::vec3(-1.6f, -0.45f, -0.7f), glm::vec3(0.1f, 0.9f, 0.1f), colBlack, 0.0f, 0.8f);
-    AddBox(deskPos + glm::vec3(1.6f, -0.45f, -0.7f), glm::vec3(0.1f, 0.9f, 0.1f), colBlack, 0.0f, 0.8f);
-    AddBox(deskPos + glm::vec3(-1.6f, -0.45f, 0.7f), glm::vec3(0.1f, 0.9f, 0.1f), colBlack, 0.0f, 0.8f);
-    AddBox(deskPos + glm::vec3(1.6f, -0.45f, 0.7f), glm::vec3(0.1f, 0.9f, 0.1f), colBlack, 0.0f, 0.8f);
+    // 3. Desk Area - Modern Ergonomic Workspace
+    glm::vec3 deskPos(4.5f, loftY + 0.75f, -8.0f);
+    AddBox(deskPos, glm::vec3(3.5f, 0.08f, 1.8f), colWood, 0.1f, 0.6f); // Desktop
+    // Desk legs aligned perfectly to rest on the loft floor (Y=4.6f)
+    AddBox(deskPos + glm::vec3(-1.6f, -0.345f, -0.7f), glm::vec3(0.08f, 0.61f, 0.08f), colBlack, 0.2f, 0.8f);
+    AddBox(deskPos + glm::vec3(1.6f, -0.345f, -0.7f), glm::vec3(0.08f, 0.61f, 0.08f), colBlack, 0.2f, 0.8f);
+    AddBox(deskPos + glm::vec3(-1.6f, -0.345f, 0.7f), glm::vec3(0.08f, 0.61f, 0.08f), colBlack, 0.2f, 0.8f);
+    AddBox(deskPos + glm::vec3(1.6f, -0.345f, 0.7f), glm::vec3(0.08f, 0.61f, 0.08f), colBlack, 0.2f, 0.8f);
     
-    // Monitor
-    AddBox(deskPos + glm::vec3(0, 0.1f, -0.5f), glm::vec3(0.6f, 0.2f, 0.4f), colBlack, 0.1f, 0.5f); // Base
-    AddBox(deskPos + glm::vec3(0, 0.8f, -0.6f), glm::vec3(1.8f, 1.2f, 0.05f), colBlack, 0.0f, 0.2f); // Screen
-    // Keyboard & Mouse
-    AddBox(deskPos + glm::vec3(0, 0.06f, 0.2f), glm::vec3(1.2f, 0.02f, 0.4f), colGrey, 0.0f, 0.5f); // Keyboard
-    AddBox(deskPos + glm::vec3(0.9f, 0.06f, 0.2f), glm::vec3(0.15f, 0.03f, 0.2f), colBlack, 0.1f, 0.5f); // Mouse
-    // Books
-    AddBox(deskPos + glm::vec3(-1.2f, 0.15f, 0.3f), glm::vec3(0.4f, 0.1f, 0.6f), colBlue, 0.0f, 0.8f);
-    AddBox(deskPos + glm::vec3(-1.2f, 0.25f, 0.3f), glm::vec3(0.4f, 0.1f, 0.6f), colOrange, 0.0f, 0.8f);
+    // Large Felt Desk Mat / Mousepad
+    AddBox(deskPos + glm::vec3(0.0f, 0.045f, 0.1f), glm::vec3(2.0f, 0.01f, 0.8f), colGrey, 0.0f, 0.9f);
 
-    // Ergonomic Chair - Taller
-    glm::vec3 chairPos = deskPos + glm::vec3(0, -0.4f, 1.3f);
-    AddBox(chairPos, glm::vec3(0.9f, 0.12f, 0.9f), colBlack, 0.1f, 0.5f); // Seat
-    AddBox(chairPos + glm::vec3(0, 0.6f, 0.45f), glm::vec3(0.8f, 1.3f, 0.15f), colBlack, 0.1f, 0.5f); // Ergonomic Back
-    AddBox(chairPos + glm::vec3(0, 1.3f, 0.45f), glm::vec3(0.5f, 0.3f, 0.1f), colBlack, 0.1f, 0.5f); // Headrest
-    AddBox(chairPos + glm::vec3(0.45f, 0.4f, 0), glm::vec3(0.1f, 0.7f, 0.6f), colBlack, 0.1f, 0.5f); // Armrest L
-    AddBox(chairPos + glm::vec3(-0.45f, 0.4f, 0), glm::vec3(0.1f, 0.7f, 0.6f), colBlack, 0.1f, 0.5f); // Armrest R
-    // Base and 5-star legs with wheels
-    AddBox(chairPos + glm::vec3(0, -0.2f, 0), glm::vec3(0.08f, 0.4f, 0.08f), colBlack, 0.5f, 0.2f); // Central pillar
+    // Premium Curved Ultra-Wide Monitor (34-inch style)
+    AddBox(deskPos + glm::vec3(0.0f, 0.05f, -0.5f), glm::vec3(0.5f, 0.02f, 0.3f), colGrey, 0.8f, 0.2f); // Metal base
+    AddBox(deskPos + glm::vec3(0.0f, 0.25f, -0.55f), glm::vec3(0.08f, 0.4f, 0.08f), colGrey, 0.8f, 0.2f); // Mount column
+    AddBox(deskPos + glm::vec3(0.0f, 0.45f, -0.5f), glm::vec3(1.6f, 0.7f, 0.04f), colBlack, 0.1f, 0.5f);  // Screen bezel
+    AddBox(deskPos + glm::vec3(0.0f, 0.45f, -0.47f), glm::vec3(1.54f, 0.64f, 0.01f), glm::vec3(0.1f, 0.15f, 0.2f), 0.9f, 0.1f); // Glowing active screen
+
+    // Keyboard & Mouse
+    AddBox(deskPos + glm::vec3(0.0f, 0.055f, 0.1f), glm::vec3(0.9f, 0.03f, 0.3f), colBlack, 0.1f, 0.5f); // Keyboard base
+    AddBox(deskPos + glm::vec3(0.0f, 0.07f, 0.1f), glm::vec3(0.86f, 0.01f, 0.26f), colGrey, 0.0f, 0.8f);   // Keycaps
+    AddBox(deskPos + glm::vec3(-0.4f, 0.071f, 0.1f), glm::vec3(0.05f, 0.01f, 0.05f), colOrange, 0.0f, 0.8f); // ESC accent key
+    
+    AddBox(deskPos + glm::vec3(0.6f, 0.055f, 0.1f), glm::vec3(0.12f, 0.04f, 0.2f), colBlack, 0.1f, 0.5f);  // Mouse body
+    AddBox(deskPos + glm::vec3(0.6f, 0.076f, 0.05f), glm::vec3(0.01f, 0.01f, 0.03f), colGrey, 0.8f, 0.2f); // Scroll wheel
+
+    // Books
+    AddBox(deskPos + glm::vec3(-1.2f, 0.07f, 0.3f), glm::vec3(0.4f, 0.06f, 0.6f), colBlue, 0.0f, 0.8f);
+    AddBox(deskPos + glm::vec3(-1.2f, 0.13f, 0.3f), glm::vec3(0.4f, 0.06f, 0.6f), colOrange, 0.0f, 0.8f);
+
+    // Ergonomic Chair (Herman Miller Aeron Style - scaled to perfect human dimensions)
+    glm::vec3 chairPos = deskPos + glm::vec3(0.0f, -0.3f, 1.2f); // Y center = 4.95f
+    AddBox(chairPos, glm::vec3(0.7f, 0.08f, 0.7f), colBlack, 0.1f, 0.6f); // Seat
+    AddBox(chairPos + glm::vec3(0.0f, 0.45f, 0.32f), glm::vec3(0.6f, 0.8f, 0.08f), colBlack, 0.1f, 0.7f); // Backrest
+    AddBox(chairPos + glm::vec3(0.0f, 0.95f, 0.32f), glm::vec3(0.4f, 0.2f, 0.08f), colBlack, 0.1f, 0.7f); // Headrest
+    AddBox(chairPos + glm::vec3(0.38f, 0.2f, -0.05f), glm::vec3(0.06f, 0.4f, 0.4f), colBlack, 0.1f, 0.5f);  // Armrest L
+    AddBox(chairPos + glm::vec3(-0.38f, 0.2f, -0.05f), glm::vec3(0.06f, 0.4f, 0.4f), colBlack, 0.1f, 0.5f); // Armrest R
+    
+    // Chrome Central Pillar
+    AddBox(chairPos + glm::vec3(0.0f, -0.15f, 0.0f), glm::vec3(0.06f, 0.22f, 0.06f), colGrey, 0.8f, 0.2f);
+    
+    // 5-Star Legs and Wheels (Aligned precisely with loft floor top Y=4.6f)
     for(int i = 0; i < 5; i++) {
         float angle = i * (360.0f / 5.0f);
         float rad = glm::radians(angle);
@@ -150,11 +165,11 @@ void Scene::Initialize() {
         float lz = sin(rad);
         
         // Leg extending outward
-        glm::vec3 legPos = chairPos + glm::vec3(lx * 0.175f, -0.4f, lz * 0.175f);
-        AddBox(legPos, glm::vec3(0.35f, 0.04f, 0.04f), colBlack, 0.5f, 0.2f, glm::vec3(0, -angle, 0));
+        glm::vec3 legPos = chairPos + glm::vec3(lx * 0.14f, -0.29f, lz * 0.14f);
+        AddBox(legPos, glm::vec3(0.28f, 0.04f, 0.04f), colGrey, 0.8f, 0.2f, glm::vec3(0, -angle, 0));
         
-        // Wheel at the end of the leg
-        glm::vec3 wheelPos = chairPos + glm::vec3(lx * 0.35f, -0.45f, lz * 0.35f);
+        // Wheel resting perfectly on loft floor
+        glm::vec3 wheelPos = chairPos + glm::vec3(lx * 0.28f, -0.32f, lz * 0.28f);
         AddBox(wheelPos, glm::vec3(0.06f, 0.06f, 0.06f), colBlack, 0.1f, 0.8f, glm::vec3(0, -angle, 0));
     }
 
